@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Acesso OLITEF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Básicos */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #2088FE; /* Azul vibrante OLITEF */
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Layout Principal: 3 Colunas preenchendo toda a largura */
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        /* Imagens Laterais */
+        .side-image {
+            flex: 1; 
+            display: flex;
+            align-items: center; /* Centraliza verticalmente na coluna */
+            justify-content: center;
+            background-color: #2088FE; /* Mantém o fundo azul nas sobras */
+        }
+        
+        .side-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* ALTERAÇÃO AQUI: Garante que a imagem caiba inteira sem cortar */
+            object-position: center;
+        }
+
+        /* Coluna Central (Logotipo + Caixa de Pesquisa + Resultados) */
+        .center-column {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 40px;
+            gap: 30px; /* Reduzido o gap para acomodar o logo */
+            background-color: #2088FE; 
+            z-index: 10;
+        }
+
+        /* Logotipo Central */
+        .center-logo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: -10px; /* Aproxima um pouco o logo da caixa branca */
+        }
+        
+        .center-logo img {
+            max-width: 250px; /* Ajuste o tamanho do logotipo aqui */
+            height: auto;
+        }
+
+        /* Caixa de Pesquisa */
+        .search-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        
+        .search-container h2 {
+            color: #044C73;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .search-container p.subtitle {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            border-color: #2088FE;
+        }
+        
+        button {
+            background-color: #2ECC71; 
+            color: white;
+            border: none;
+            padding: 16px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #27AE60;
+        }
+
+        /* Áreas de Resultado e Erro */
+        .result, .error {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            display: none;
+        }
+        
+        .result {
+            background-color: #f0fdf4;
+            border-left: 5px solid #2ECC71;
+        }
+        
+        .result p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        
+        .error {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border-left: 5px solid #dc2626;
+            font-weight: 600;
+        }
+
+        /* Imagem Inferior (Resultados da Edição Anterior) */
+        .bottom-image {
+            width: 100%;
+            max-width: 500px; /* Igualado ao tamanho da caixa de pesquisa */
+            display: flex;
+            justify-content: center;
+        }
+        
+        .bottom-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1000px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .side-image {
+                display: none;
+            }
+            .center-column {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        
+        <!-- Coluna Esquerda: Imagem da Estudante -->
+        <div class="side-image">
+            <img src="Feed - OLITEF 2026 - 2.png" alt="Estudante OLITEF">
+        </div>
+
+        <!-- Coluna Central: Logo + Formulário + Imagem Inferior -->
+        <div class="center-column">
+            
+            <!-- Logotipo Adicionado Aqui -->
+            <div class="center-logo">
+                <img src="LOGO OLITEF - HORIZONTAL - BRANCO.png" alt="Logotipo OLITEF">
+            </div>
+            
+            <div class="search-container">
+                <h2>Acesso do Aluno para a plataforma da OLITEF 2026</h2>
+                <p class="subtitle">Digite seu nome completo para ver seu Login e Senha.</p>
+                
+                <div class="form-group">
+                    <label for="nomeAluno">Nome Completo</label>
+                    <input type="text" id="nomeAluno" placeholder="Digite seu nome completo aqui">
+                </div>
+                <button onclick="buscarDados()">Pesquisar Acesso</button>
+
+                <div id="mensagemErro" class="error">
+                    Aluno não encontrado. Verifique se o nome está digitado corretamente.
+                </div>
+                
+                <div id="resultado" class="result">
+                    <p><strong>Nome:</strong> <span id="resNome"></span></p>
+                    <p><strong>Turma:</strong> <span id="resSerie"></span> - <span id="resTurma"></span></p>
+                    <hr style="border: 0; border-top: 1px solid #ccc; margin: 15px 0;">
+                    <p style="font-size: 1.1em;"><strong>Login:</strong> <span id="resLogin" style="color: #044C73;"></span></p>
+                    <p style="font-size: 1.1em;"><strong>Senha:</strong> <span id="resSenha" style="color: #044C73;"></span></p>
+                </div>
+            </div>
+
+            <!-- Imagem dos Resultados abaixo da caixa -->
+            <div class="bottom-image">
+                <img src="resultado OLITEF.png" alt="Resultados da edição anterior">
+            </div>
+
+        </div>
+
+        <!-- Coluna Direita: Imagem de Vários Estudantes -->
+        <div class="side-image">
+            <img src="Feed - OLITEF 2026 - 1.png" alt="Estudantes OLITEF">
+        </div>
+
+    </div>
+
+    <script>
+        // --- COLE AQUI AQUELE CÓDIGO GIGANTE COM OS 120 ALUNOS ---
+        // Vou deixar os 3 primeiros como exemplo, não esqueça de substituir pela lista completa!
+        const alunos = [{"NOME": "ADRIAN GABRYEL GONÇALVES ALMEIDA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "AIB@970", "SENHA": "AIB@97025"}, {"NOME": "ALEXIA BEZERRA NUNES", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "AXZ@970", "SENHA": "AXZ@97025"}, {"NOME": "ALINNY GABRIELLY BEZERRA DE LIMA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "ANB@970", "SENHA": "ANB@97025"}, {"NOME": "ANA ÁVILLA GONÇALVES DE OLIVEIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "AAAL@970", "SENHA": "AAAL@97025"}, {"NOME": "ANA CLARA NOBRE TELES", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "ACNO@970", "SENHA": "ACNO@97025"}, {"NOME": "ANA JULIA DE SOUSA MACÊDO", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "AJDS@970", "SENHA": "AJDS@97025"}, {"NOME": "ANA LIVIA DOS SANTOS BRAZ", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "ALDN@970", "SENHA": "ALDN@97025"}, {"NOME": "ANA RAFAELA DE OLIVEIRA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "ARL@970", "SENHA": "ARL@97025"}, {"NOME": "ANA RAQUEL DOS SANTOS SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "ARLD@970", "SENHA": "ARLD@97025"}, {"NOME": "ANDRÉ FERREIRA DA SILVA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "ARRE@970", "SENHA": "ARRE@97025"}, {"NOME": "ANDRÉ RYAN DO NASCIMENTO ROFINO", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "ARN@970", "SENHA": "ARN@97025"}, {"NOME": "ANNA CECILLYA LEITE GUEDES", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "AALL@970", "SENHA": "AALL@97025"}, {"NOME": "ANTONIO FERREIRA NOBRE NETO", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "AOEE@970", "SENHA": "AOEE@97025"}, {"NOME": "BRUNA KARLA SOUSA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "BNLA@970", "SENHA": "BNLA@97025"}, {"NOME": "CARLOS HENRIQUE DE SOUSA GONÇALVES OLIVEIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "CLNQ@970", "SENHA": "CLNQ@97025"}, {"NOME": "CÉSAR MIGUEL ALMEIDA BEZERRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "CAUE@970", "SENHA": "CAUE@97025"}, {"NOME": "CICERO DAVI SOUZA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "CEV@970", "SENHA": "CEV@97025"}, {"NOME": "DAVI ARTHUR GOMES DA SILVA BALDUINO", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "DIUR@970", "SENHA": "DIUR@97025"}, {"NOME": "DAVI LUCAS DE LIMA SOUZA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "DIS5@970", "SENHA": "DIS5@97025"}, {"NOME": "DAVI LUCAS PEIXOTO CABRAL", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "DISP@970", "SENHA": "DISP@97025"}, {"NOME": "DÉBORA LOPES MEDEIROS", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "DOP@970", "SENHA": "DOP@97025"}, {"NOME": "DEIVISON RIAN SILVA CARDOSO", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "DVR@970", "SENHA": "DVR@97025"}, {"NOME": "DIEGO BRAZ SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "DGZS@970", "SENHA": "DGZS@97025"}, {"NOME": "ELIAS VIDAL DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "EAAI@970", "SENHA": "EAAI@97025"}, {"NOME": "ELISANDRA DE ALMEIDA PEREIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "ESAA@970", "SENHA": "ESAA@97025"}, {"NOME": "EMANUELLY MARIA SILVA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "ENYM@970", "SENHA": "ENYM@97025"}, {"NOME": "EMILLY DE SOUSA ALVES", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "ELSO@970", "SENHA": "ELSO@97025"}, {"NOME": "EMILLYO DAVY DE SOUZA PEREIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "ELAV@970", "SENHA": "ELAV@97025"}, {"NOME": "ENZO GABRIEL OLIVEIRA ALMINO", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "EOIO@970", "SENHA": "EOIO@97025"}, {"NOME": "ERYCK ALMEIDA LOPES", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "ECEI@970", "SENHA": "ECEI@97025"}, {"NOME": "ERYCK MATHEUS BRITO TAVARES", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "ECH@970", "SENHA": "ECH@97025"}, {"NOME": "FÁTIMA LAYORRANE ALVES AMÂNCIO", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "FIYO@970", "SENHA": "FIYO@97025"}, {"NOME": "FELIPE GABRIEL SOUSA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "FIBR@970", "SENHA": "FIBR@97025"}, {"NOME": "FELIPE SOUSA DE BRITO", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "FIUS@970", "SENHA": "FIUS@97025"}, {"NOME": "FLAVIO MATHEUS SANTOS CAVALCANTE", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "FVTH@970", "SENHA": "FVTH@97025"}, {"NOME": "FRANCISCO ADRIANO ALVES DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "FNOS@970", "SENHA": "FNOS@97025"}, {"NOME": "FRANCISCO FERNANDO SOUZA SILVA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "FNOF@970", "SENHA": "FNOF@97025"}, {"NOME": "FRANCISCO JEFFERSON ALEXANDRE DA SILVA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "FNOJ@970", "SENHA": "FNOJ@97025"}, {"NOME": "GABRIEL LIRA NOBRE", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "GRIN@970", "SENHA": "GRIN@97025"}, {"NOME": "GABRYELE DE ANDRADE ALMEIDA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "GRDE@970", "SENHA": "GRDE@97025"}, {"NOME": "GUSTAVO DE OLIVEIRA PARNAÍBA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "GTEI@970", "SENHA": "GTEI@97025"}, {"NOME": "HUDSON EMANUEL SILVA DE QUEIROZ", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "HSAN@970", "SENHA": "HSAN@97025"}, {"NOME": "IONARA RODRIGUES TAVARES", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "IAD@970", "SENHA": "IAD@97025"}, {"NOME": "ISADORA KARINE SOUSA GARCIA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "IDA@970", "SENHA": "IDA@97025"}, {"NOME": "ISMAEL ALMEIDA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "IAM@970", "SENHA": "IAM@97025"}, {"NOME": "ÍTALO DAVI LIRA COSTA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "ILI@970", "SENHA": "ILI@97025"}, {"NOME": "JACKSON NEYMAR SOUSA DO NASCIMENTO", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "JKE@970", "SENHA": "JKE@97025"}, {"NOME": "JACQUELINE WERONIKA BELISARIO DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "JQNE@970", "SENHA": "JQNE@97025"}, {"NOME": "JAMILLI DE SOUSA LIMA PEREIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "JIEO@970", "SENHA": "JIEO@97025"}, {"NOME": "JESREL MARTINS GONÇALVES FILHO", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "JRR@970", "SENHA": "JRR@97025"}, {"NOME": "JHONATAN SANTOS SALES", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "JNSA@970", "SENHA": "JNSA@97025"}, {"NOME": "JOÃO YCARO SILVA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "JOO27@970", "SENHA": "JOO27@97025"}, {"NOME": "JONAS AURELIANO DE LIMA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "JAEL@970", "SENHA": "JAEL@97025"}, {"NOME": "JONH KENNEDY BELISARIO DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "JHE@970", "SENHA": "JHE@97025"}, {"NOME": "JOSÉ ARTHUR ALEXANDRE DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "JEUL@970", "SENHA": "JEUL@97025"}, {"NOME": "JOSÉ EDMILSON ALVES JUNIOR", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "JELS@970", "SENHA": "JELS@97025"}, {"NOME": "JOSÉ GUSTAVO BRAZ DE SOUZA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "JEAO@970", "SENHA": "JEAO@97025"}, {"NOME": "JOSÉ LUCAS DE ALMEIDA SANTOS", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "JESD@970", "SENHA": "JESD@97025"}, {"NOME": "JOSÉ RODRIGO LIMA DOS SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "JEIG@970", "SENHA": "JEIG@97025"}, {"NOME": "JOSÉ YTALO SILVA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "JEOI@970", "SENHA": "JEOI@97025"}, {"NOME": "JOSÉ YURI  DE SOUSA ROCHA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "JED@970", "SENHA": "JED@97025"}, {"NOME": "JULIO CESAR OLIVEIRA BRAZ DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "JIAV@970", "SENHA": "JIAV@97025"}, {"NOME": "JULLYA LOHANNE FERREIRA DE ANDRADE", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "JLH@970", "SENHA": "JLH@97025"}, {"NOME": "KAIO LUCAS SOUZA PEREIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "KOSS@970", "SENHA": "KOSS@97025"}, {"NOME": "KAUAN DAVID DOS SANTOS ROCHA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "KAID@970", "SENHA": "KAID@97025"}, {"NOME": "KAUÊ SALES FEITOSA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "KESF@970", "SENHA": "KESF@97025"}, {"NOME": "LARA SOFYA DE AGUIAR NUNES", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "LAAG@970", "SENHA": "LAAG@97025"}, {"NOME": "LARISSA ALVES DE SOUZA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "LILE@970", "SENHA": "LILE@97025"}, {"NOME": "LARYSSA SOPHIA SANTOS CABRAL", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "LYO@970", "SENHA": "LYO@97025"}, {"NOME": "LIS MÍRIA DE LIMA SOUSA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "LMD@970", "SENHA": "LMD@97025"}, {"NOME": "LIVIA HELENA LIRA COSTA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "LIEI@970", "SENHA": "LIEI@97025"}, {"NOME": "LUANNA SAWANE LIMA DE SOUSA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "LNW@970", "SENHA": "LNW@97025"}, {"NOME": "LUCAS RONIEL PEREIRA DE OLIVEIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "LAIP@970", "SENHA": "LAIP@97025"}, {"NOME": "LUIS ANDRÉ CAETANO DE SOUSA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "LSEC@970", "SENHA": "LSEC@97025"}, {"NOME": "MARIA ALYCE BEZERRA DE LIMA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MICB@970", "SENHA": "MICB@97025"}, {"NOME": "MARIA CLARA SABINO SANTANA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MIR23@970", "SENHA": "MIR23@97025"}, {"NOME": "MARIA EDUARDA ALVES DE LIMA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "MIA66@970", "SENHA": "MIA66@97025"}, {"NOME": "MARIA EDUARDA SOUSA DE LIMA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MIA64@970", "SENHA": "MIA64@97025"}, {"NOME": "MARIA FERNANDA DE ALMEIDA NUNES", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MIN6@970", "SENHA": "MIN6@97025"}, {"NOME": "MARIA GABRIELLY FERREIRA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MIR48@970", "SENHA": "MIR48@97025"}, {"NOME": "MARIA GISELE RIBEIRO FERREIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MIEB@970", "SENHA": "MIEB@97025"}, {"NOME": "MARIA HELENA SABINO SANTANA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MIE2@970", "SENHA": "MIE2@97025"}, {"NOME": "MARIA HELOISA SABINO SANTANA DA SILVA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "MIO13@970", "SENHA": "MIO13@97025"}, {"NOME": "MARIA ISACARLA DE ALMEIDA OLIVEIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MICR@970", "SENHA": "MICR@97025"}, {"NOME": "MARIA JAMILLY ALVES DOS SANTOS", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "MIIY@970", "SENHA": "MIIY@97025"}, {"NOME": "MARIA LORENA BRAZ DOS SANTOS", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "MIE1@970", "SENHA": "MIE1@97025"}, {"NOME": "MARIA LUIZA ALVES DE ARAÚJO", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MIZ10@970", "SENHA": "MIZ10@97025"}, {"NOME": "MARIA LUMENA MACÊDO DE OLIVEIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "MIEC@970", "SENHA": "MIEC@97025"}, {"NOME": "MARIA RITA ALEXANDRE DE SOUZA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MIA111@970", "SENHA": "MIA111@97025"}, {"NOME": "MARIA YARA DE SOUZA ROCHA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "MIA65@970", "SENHA": "MIA65@97025"}, {"NOME": "MARYNA DE OLIVEIRA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "MYO@970", "SENHA": "MYO@97025"}, {"NOME": "MATEUS DA SILVA TAVARES", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "MESI@970", "SENHA": "MESI@97025"}, {"NOME": "MIGUEL SAMY SILVA FERREIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "MUMY@970", "SENHA": "MUMY@97025"}, {"NOME": "MIRIAN DAS GRAÇAS OLIVEIRA ANICETE", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "MISG@970", "SENHA": "MISG@97025"}, {"NOME": "NUBIA RIBEIRO SILVA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "NIE@970", "SENHA": "NIE@97025"}, {"NOME": "PABLO RYAN NOGUEIRA BRITO", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "PLNN@970", "SENHA": "PLNN@97025"}, {"NOME": "PAULO MIGUEL LIMA REGIS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "PLUE@970", "SENHA": "PLUE@97025"}, {"NOME": "PEDRO EDUARDO NOBRE DE ALMEIDA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "PRA2@970", "SENHA": "PRA2@97025"}, {"NOME": "PEDRO IGOR SANTOS DE MELO", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "PRR26@970", "SENHA": "PRR26@97025"}, {"NOME": "PEDRO RANIEL DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "PRIL@970", "SENHA": "PRIL@97025"}, {"NOME": "PEDRO YAN PEREIRA SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "PRP@970", "SENHA": "PRP@97025"}, {"NOME": "RAFAEL DUAN TAVARES DE SOUSA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "RAAT@970", "SENHA": "RAAT@97025"}, {"NOME": "RAINE JUVENCIO PEREIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "RNEN@970", "SENHA": "RNEN@97025"}, {"NOME": "RAYSHA NALDYANI  SILVA SOUSA", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "RSLD@970", "SENHA": "RSLD@97025"}, {"NOME": "REBEKA ZUMBA ROSENO", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "REMB@970", "SENHA": "REMB@97025"}, {"NOME": "RENATO COUTINHO DA SILVA MAGALHÃES", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "RAUT@970", "SENHA": "RAUT@97025"}, {"NOME": "RENÊ DA SILVA SANTOS", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "REL@970", "SENHA": "REL@97025"}, {"NOME": "ROBSON NEYMAR SOUSA NASCIMENTO", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "RSY@970", "SENHA": "RSY@97025"}, {"NOME": "SAMARA KETLLYN FELIX DIAS", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "SATL@970", "SENHA": "SATL@97025"}, {"NOME": "SOFIA ALEXANDRE DOS SANTOS", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "SIX@970", "SENHA": "SIX@97025"}, {"NOME": "STHÉFANY SILVA AGOSTINHO", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "SES@970", "SENHA": "SES@97025"}, {"NOME": "TAYNÁ MARIA CARDOSO TAVARES NOBRE", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "TNI@970", "SENHA": "TNI@97025"}, {"NOME": "TEREZA DAVILA ALVES DE ALMEIDA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "TEVI@970", "SENHA": "TEVI@97025"}, {"NOME": "THAYLLA NARA DE SOUSA CAETANO", "NÍVEL DA PROVA": "N2", "SÉRIE": "8º ano", "TURMA": "A", "LOGIN": "TYA@970", "SENHA": "TYA@97025"}, {"NOME": "VICENTE EMANUEL DO NASCIMENTO SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "VEM@970", "SENHA": "VEM@97025"}, {"NOME": "VITÓRIA RENATA SARAIVA DE OLIVEIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "VOEA@970", "SENHA": "VOEA@97025"}, {"NOME": "WILLIAN MATHEUS ALMEIDA DA SILVA", "NÍVEL DA PROVA": "N1", "SÉRIE": "6º ano", "TURMA": "A", "LOGIN": "WLAE@970", "SENHA": "WLAE@97025"}, {"NOME": "YARLLA GABRIELLY DA SILVA OLIVEIRA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "A", "LOGIN": "YLB@970", "SENHA": "YLB@97025"}, {"NOME": "YTALLO DAVID SANTOS SOUSA", "NÍVEL DA PROVA": "N1", "SÉRIE": "7º ano", "TURMA": "B", "LOGIN": "YLV@970", "SENHA": "YLV@97025"}, {"NOME": "YUDHI ARLLEY SANTOS PEREIRA", "NÍVEL DA PROVA": "N2", "SÉRIE": "9º ano", "TURMA": "A", "LOGIN": "YHL@970", "SENHA": "YHL@97025"}];
+
+        function buscarDados() {
+            const inputNome = document.getElementById('nomeAluno').value.trim().toUpperCase();
+            const divResultado = document.getElementById('resultado');
+            const divErro = document.getElementById('mensagemErro');
+            
+            divResultado.style.display = 'none';
+            divErro.style.display = 'none';
+
+            if (inputNome === "") return;
+
+            const alunoEncontrado = alunos.find(aluno => aluno.NOME === inputNome);
+
+            if (alunoEncontrado) {
+                document.getElementById('resNome').innerText = alunoEncontrado.NOME;
+                document.getElementById('resSerie').innerText = alunoEncontrado.SÉRIE;
+                document.getElementById('resTurma').innerText = alunoEncontrado.TURMA;
+                document.getElementById('resLogin').innerText = alunoEncontrado.LOGIN;
+                document.getElementById('resSenha').innerText = alunoEncontrado.SENHA;
+                
+                divResultado.style.display = 'block';
+            } else {
+                divErro.style.display = 'block';
+            }
+        }
+
+        document.getElementById('nomeAluno').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                buscarDados();
+            }
+        });
+    </script>
+</body>
+</html>
