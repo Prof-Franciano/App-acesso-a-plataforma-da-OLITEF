@@ -182,12 +182,20 @@
         @media (max-width: 1000px) {
             .main-content {
                 flex-direction: column;
+                gap: 20px; /* Espaço entre as imagens e a coluna central */
             }
             .side-image {
-                display: none;
+                /* Removemos o display: none para que elas apareçam */
+                display: flex; 
+                width: 100%;
+                padding: 10px 0;
+            }
+            .side-image img {
+                max-height: 350px; /* Limita a altura para não ocupar a tela toda do celular */
+                object-fit: contain;
             }
             .center-column {
-                padding: 40px 20px;
+                padding: 10px 20px; /* Ajusta o respiro lateral para celulares */
             }
         }
     </style>
